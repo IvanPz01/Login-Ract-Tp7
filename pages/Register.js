@@ -19,6 +19,22 @@ const RegisterScreen = ({ navigation, route }) => {
   const [mensajeError, setMensajeError] = useState("");
 
   const handleRegister = () => {
+    // Validar nombre de usuario
+    if (nuevoUsuario.length < 5 || nuevoUsuario.length > 10) {
+      setMensajeError("El usuario debe tener entre 5 y 10 caracteres");
+      return;
+    }
+
+    // Validar contraseña
+    const strongPasswordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,}$/;
+    if (!strongPasswordRegex.test(password)) {
+      setMensajeError(
+        "La contraseña debe tener al menos 5 caracteres, una letra mayúscula, una letra minúscula, y un símbolo"
+      );
+      return;
+    }
+
     if (usuarios.some((u) => u.usuario === nuevoUsuario)) {
       setMensajeError("El usuario ya existe");
     } else {

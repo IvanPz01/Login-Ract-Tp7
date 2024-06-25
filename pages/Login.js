@@ -33,6 +33,17 @@ const LoginScreen = ({ navigation, route }) => {
   }, [route.params?.usuarios]);
 
   const handleLogin = () => {
+    // Validar nombre de usuario (si aplica alguna validación específica)
+    // Validar contraseña
+    const strongPasswordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,}$/;
+    if (!strongPasswordRegex.test(password)) {
+      setMensajeError(
+        "La contraseña debe tener al menos 5 caracteres, una letra mayúscula, una letra minúscula, y un símbolo"
+      );
+      return;
+    }
+
     if (validarLogin(usuario, password, usuarios)) {
       navigation.navigate("Home", { usuario });
     } else {
